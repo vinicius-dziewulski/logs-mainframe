@@ -6,6 +6,8 @@ export const environment = {
   production: false
 };
 
+export const API_PATH = "https://ebm-cta-test-datasquad-apim.azure-api.net/tbalogs-viewer/v2/searchDB/v2"
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -44,7 +44,9 @@ export class AppComponent {
     this.query.to = this.toDate;
     console.log(this.query);
     // console.log(this.dataSource);
-
+    this.tableContentService.sendQuery(this.query)
+    .then((tableContent: any) => console.log(tableContent))
+    .catch((error: any) => console.error(error));
     
 
     setTimeout(()=>{
