@@ -1,0 +1,78 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Volvo Group - TBALOG</span>
+        <span class="spacer"></span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card>
+    <h1>Filtros</h1>
+
+    <mat-form-field class="query-field">
+        <mat-label>JCL</mat-label>
+        <input matInput [(ngModel)]="jclParameter" placeholder="Ex. PA04R01" required>
+    </mat-form-field>
+
+
+    <mat-form-field class="query-field">
+        <mat-label>Keyword</mat-label>
+        <input matInput [(ngModel)]="keywordParameter" placeholder="Ex. -803"
+            required>
+    </mat-form-field>
+
+    <mat-form-field class="query-field">
+        <mat-label>From</mat-label>
+        <input matInput [(ngModel)]="fromDate" type="date">
+    </mat-form-field>
+
+    <mat-form-field class="query-field">
+        <mat-label>To</mat-label>
+        <input matInput [(ngModel)]="toDate" type="date">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" (click)="sendQuery()">Procurar</button>
+
+
+    <mat-spinner class="spinner" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+</mat-card>
+
+<mat-divider></mat-divider>
+
+<mat-card *ngIf="dataSource">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="jcl">
+            <th mat-header-cell *matHeaderCellDef> JCL </th>
+            <td mat-cell *matCellDef="let element"> {{element.jcl}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="query">
+            <th mat-header-cell *matHeaderCellDef> Query </th>
+            <td mat-cell *matCellDef="let element"> {{element.query}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="consolidatedFileName">
+            <th mat-header-cell *matHeaderCellDef> Nome do arquivo consolidado </th>
+            <td mat-cell *matCellDef="let element"> {{element.consolidatedFileName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="job">
+            <th mat-header-cell *matHeaderCellDef> Job </th>
+            <td mat-cell *matCellDef="let element"> {{element.job}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeStamp">
+            <th mat-header-cell *matHeaderCellDef> Time Stamp </th>
+            <td mat-cell *matCellDef="let element"> {{element.timeStamp}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="directLink">
+            <th mat-header-cell *matHeaderCellDef> Direct Link </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-stroked-button color="primary" (click)="goToLink(element.directLink)">Baixar arquivo</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>
