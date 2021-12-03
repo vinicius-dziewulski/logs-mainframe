@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableOfContentModel } from './app.model';
+import { TableOfContentModel, ApiReturn } from './app.model';
 import { QueryModel } from './query.model';
 import { TableContentService } from './services/table-content.service';
 
@@ -17,13 +17,24 @@ export class AppComponent {
 
   showSpinner: boolean = false;
 
-  dataSource: Array<TableOfContentModel> = Array<TableOfContentModel>();
+  dataSource: Array<TableOfContentModel> = [];
+
+  result: Array<string> = [];
 
   query: QueryModel = new QueryModel();
 
   testDisplay: Array<TableOfContentModel> = [{
     jcl: "KO00R01", 
     query: "00064801107480", 
+    consolidatedFileName: "dbfs:/mnt/tbalogcons/KO00R01/20210917/KO00R01.csv", 
+    directLink: "https://mainframelogs.blob.core.windows.net/tbalogcons/KO00R01/20210917/KO00R01.csv/KO00R01-20210917.csv?se=2021-12-14T20%3A30%3A26Z&sp=r&sv=2020-10-02&ss=b&srt=o&sig=3SRd0VG7pUzuNnQrasm5MVDhn%2BwA4qEfSSuWYGHPeyo%3D",
+    job: "JOB30954",
+    sourceFileName: "dbfs:/mnt/tbalog/KO00R01/20210917/KO00R01-2021-09-17 05-07-29_JOB30954.json",
+    timeStamp: "2021-09-17 05-07-29"
+  },
+  {
+    jcl: "AAAAA", 
+    query: "BBBBBBBBBB", 
     consolidatedFileName: "dbfs:/mnt/tbalogcons/KO00R01/20210917/KO00R01.csv", 
     directLink: "https://mainframelogs.blob.core.windows.net/tbalogcons/KO00R01/20210917/KO00R01.csv/KO00R01-20210917.csv?se=2021-12-14T20%3A30%3A26Z&sp=r&sv=2020-10-02&ss=b&srt=o&sig=3SRd0VG7pUzuNnQrasm5MVDhn%2BwA4qEfSSuWYGHPeyo%3D",
     job: "JOB30954",
@@ -44,15 +55,23 @@ export class AppComponent {
     this.query.to = this.toDate;
     console.log(this.query);
     // console.log(this.dataSource);
+
     this.tableContentService.sendQuery(this.query)
-    .then((tableContent: any) => console.log(tableContent))
-    .catch((error: any) => console.error(error));
+    .then((tableContent: any) => {
+      // this.dataSource = tableContent;
+      console.log(tableContent);
+    })
+    .catch((error: any) => {
+      console.error(error);
+      alert("Ocorreu um erro por favor tente novamente.");
+      
+    });
     
 
     setTimeout(()=>{
-      this.dataSource = this.testDisplay;
+      // this.dataSource = this.testDisplay;
       this.showSpinner = false;
-    }, 2000)
+    }, 5000)
   }
 
   goToLink(url: string){
