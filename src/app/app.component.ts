@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { TableOfContentModel, ApiReturn } from './app.model';
+import { TableOfContentModel } from './app.model';
 import { QueryModel } from './query.model';
 import { TableContentService } from './services/table-content.service';
+import { resultToTableOfContentModel, IResponse } from './interfaces/ITableContent';
 
 @Component({
   selector: 'app-root',
@@ -19,63 +20,55 @@ export class AppComponent {
 
   dataSource: Array<TableOfContentModel> = [];
 
-  result: Array<string> = [];
-
   query: QueryModel = new QueryModel();
-
-  testDisplay: Array<TableOfContentModel> = [{
-    jcl: "KO00R01", 
-    query: "00064801107480", 
-    consolidatedFileName: "dbfs:/mnt/tbalogcons/KO00R01/20210917/KO00R01.csv", 
-    directLink: "https://mainframelogs.blob.core.windows.net/tbalogcons/KO00R01/20210917/KO00R01.csv/KO00R01-20210917.csv?se=2021-12-14T20%3A30%3A26Z&sp=r&sv=2020-10-02&ss=b&srt=o&sig=3SRd0VG7pUzuNnQrasm5MVDhn%2BwA4qEfSSuWYGHPeyo%3D",
-    job: "JOB30954",
-    sourceFileName: "dbfs:/mnt/tbalog/KO00R01/20210917/KO00R01-2021-09-17 05-07-29_JOB30954.json",
-    timeStamp: "2021-09-17 05-07-29"
-  },
-  {
-    jcl: "AAAAA", 
-    query: "BBBBBBBBBB", 
-    consolidatedFileName: "dbfs:/mnt/tbalogcons/KO00R01/20210917/KO00R01.csv", 
-    directLink: "https://mainframelogs.blob.core.windows.net/tbalogcons/KO00R01/20210917/KO00R01.csv/KO00R01-20210917.csv?se=2021-12-14T20%3A30%3A26Z&sp=r&sv=2020-10-02&ss=b&srt=o&sig=3SRd0VG7pUzuNnQrasm5MVDhn%2BwA4qEfSSuWYGHPeyo%3D",
-    job: "JOB30954",
-    sourceFileName: "dbfs:/mnt/tbalog/KO00R01/20210917/KO00R01-2021-09-17 05-07-29_JOB30954.json",
-    timeStamp: "2021-09-17 05-07-29"
-  }];
 
   displayedColumns: string[] = ['jcl', 'query', 'consolidatedFileName', 'job', 'timeStamp', 'directLink'];
 
   constructor(private tableContentService: TableContentService){}
 
   sendQuery(){
-    this.showSpinner = true;
-    // console.log(this.jclParameter, this.keywordParameter, this.fromDate, this.toDate);
     this.query.jcl = this.jclParameter;
-    this.query.keyword = this.keywordParameter;
-    this.query.from = this.fromDate;
-    this.query.to = this.toDate;
-    console.log(this.query);
-    // console.log(this.dataSource);
+    this.query.query = this.keywordParameter;
+    this.query.init_date = this.fromDate;
+    this.query.final_date = this.toDate;
 
-    this.tableContentService.sendQuery(this.query)
-    .then((tableContent: any) => {
-      // this.dataSource = tableContent;
-      console.log(tableContent);
-    })
-    .catch((error: any) => {
-      console.error(error);
-      alert("Ocorreu um erro por favor tente novamente.");
-      
-    });
+    // console.log(this.query);
+
+    if(this.checkStringInput(this.query.jcl) || this.checkStringInput(this.query.query)){
+      alert("Por favor, preencha os campos obrigatórios!");
+    }else{
+      this.showSpinner = true;      
+      this.tableContentService.sendQuery(this.query)
+      .then((response: any) => {
+
+        var tableContent = resultToTableOfContentModel(response.jcl, response.query, response.results);
+
+        this.dataSource = tableContent;
+
+        if(tableContent.length == 0){
+          alert("Informação não encontrada.");
+        }
+
+        this.showSpinner = false;
+      })
+      .catch((error: any) => {
+        console.error(error);
+        alert("Ocorreu um erro por favor tente novamente.");
+        this.showSpinner = false;
+      });
+    }
     
-
-    setTimeout(()=>{
-      // this.dataSource = this.testDisplay;
-      this.showSpinner = false;
-    }, 5000)
   }
 
   goToLink(url: string){
     window.open(url, "_blank");
+  }
+
+  checkStringInput(text: string): boolean{
+    if(text.length == 0 || !text.trim()){
+      return true;
+    }
+    return false;
   }
 
 }

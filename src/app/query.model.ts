@@ -1,6 +1,7 @@
 export class QueryModel {
+    query!: string;
     jcl!: string;
-    keyword!: string;
-    from?: Date;
-    to?: Date;
+    mode: string = "data_filter";
+    init_date?: Date;
+    final_date?: Date;
 }

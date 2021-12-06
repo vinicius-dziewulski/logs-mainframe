@@ -4,8 +4,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatTableModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatPaginatorModule
     ],
   exports: [MatButtonModule, 
     MatToolbarModule,
@@ -23,7 +25,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatTableModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatPaginatorModule
     ],
 })
 export class MaterialModule { }
