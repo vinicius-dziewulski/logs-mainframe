@@ -32,7 +32,6 @@ export class AppComponent {
     this.query.init_date = this.fromDate;
     this.query.final_date = this.toDate;
 
-    // console.log(this.query);
 
     if(this.checkStringInput(this.query.jcl) || this.checkStringInput(this.query.query)){
       alert("Por favor, preencha os campos obrigatórios!");

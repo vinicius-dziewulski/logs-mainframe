@@ -19,15 +19,11 @@ export class TableContentService {
       'Cache-Control': 'no-cache'
     }
 
-    // const static_data = {"query":"-803","jcl":"PA04R01","mode":"data_filter","init_date":"2021-09-14","final_date":"2021-09-17"};
-
     const reponseType = 'json';
 
     let options = { headers, reponseType };
 
     var body_query = this.buildQuery(query);
-
-    console.log("Query a ser enviada: ", body_query);
 
     return this.httpClient.post<IResponse>(`${API_PATH}`, body_query, options).toPromise();
   }
