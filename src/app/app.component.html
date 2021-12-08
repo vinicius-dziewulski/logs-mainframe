@@ -8,35 +8,36 @@
 <mat-card>
     <h1>Filtros</h1>
 
-    <mat-form-field class="query-field">
+    <mat-form-field class="query-field" appearance="fill">
         <mat-label>JCL</mat-label>
         <input matInput [(ngModel)]="jclParameter" placeholder="Ex. PA04R01" required>
+        <mat-error *ngIf="checkStringInput(jclParameter)">JCL precisa ser preenchido</mat-error>
     </mat-form-field>
 
 
-    <mat-form-field class="query-field">
+    <mat-form-field class="query-field" appearance="fill">
         <mat-label>Keyword</mat-label>
-        <input matInput [(ngModel)]="keywordParameter" placeholder="Ex. -803"
-            required>
+        <input matInput [(ngModel)]="keywordParameter" placeholder="Ex. -803" required>
+        <mat-error *ngIf="checkStringInput(keywordParameter)">Keyword precisa ser preenchido</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="query-field">
+    <mat-form-field class="query-field" appearance="fill">
         <mat-label>From</mat-label>
         <input matInput [(ngModel)]="fromDate" type="date">
     </mat-form-field>
 
-    <mat-form-field class="query-field">
+    <mat-form-field class="query-field" appearance="fill">
         <mat-label>To</mat-label>
         <input matInput [(ngModel)]="toDate" type="date">
     </mat-form-field>
 
-    <button mat-flat-button color="primary" (click)="sendQuery()">Procurar</button>
+    <button mat-flat-button color="primary" [disabled]="checkMinimumFields()" (click)="sendQuery()">Procurar</button>
 
 
     <mat-spinner class="spinner" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 </mat-card>
 
-<mat-divider></mat-divider>
+<!-- <mat-divider></mat-divider> -->
 
 <mat-card *ngIf="dataSource">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

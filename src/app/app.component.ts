@@ -3,6 +3,7 @@ import { TableOfContentModel } from './app.model';
 import { QueryModel } from './query.model';
 import { TableContentService } from './services/table-content.service';
 import { resultToTableOfContentModel, IResponse } from './interfaces/ITableContent';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,13 @@ export class AppComponent {
   keywordParameter: string = "";
   fromDate?: Date;
   toDate?: Date;
+
+  isDisabled: boolean = true;
+
+  // jclParameter = new FormControl('', Validators.required);
+  // keywordParameter = new FormControl('', Validators.required);;
+  // fromDate?: Date;
+  // toDate?: Date;
 
   showSpinner: boolean = false;
 
@@ -56,7 +64,6 @@ export class AppComponent {
         this.showSpinner = false;
       });
     }
-    
   }
 
   goToLink(url: string){
@@ -64,10 +71,15 @@ export class AppComponent {
   }
 
   checkStringInput(text: string): boolean{
-    if(text.length == 0 || !text.trim()){
-      return true;
-    }
-    return false;
+    return (text.length == 0 || !text.trim())
+    ? true
+    : false;
+  }
+
+  checkMinimumFields(){
+    return (this.checkStringInput(this.jclParameter) && this.checkStringInput(this.keywordParameter))
+    ? true 
+    :false;
   }
 
 }
