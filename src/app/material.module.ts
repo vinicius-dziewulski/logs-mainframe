@@ -6,7 +6,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 @NgModule({
@@ -17,7 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatCardModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatDatepickerModule,
+    MatNativeDateModule
     ],
   exports: [MatButtonModule, 
     MatToolbarModule,
@@ -26,7 +30,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatCardModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatDatepickerModule,
+    MatNativeDateModule
     ],
 })
 export class MaterialModule { }

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TableOfContentModel } from './app.model';
 import { QueryModel } from './query.model';
 import { TableContentService } from './services/table-content.service';
 import { resultToTableOfContentModel, IResponse } from './interfaces/ITableContent';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +11,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  jclParameter: string = "";
-  keywordParameter: string = "";
-  fromDate?: Date;
-  toDate?: Date;
-
-  isDisabled: boolean = true;
-
-  // jclParameter = new FormControl('', Validators.required);
-  // keywordParameter = new FormControl('', Validators.required);;
+export class AppComponent{
+  // jclParameter: string = "";
+  // keywordParameter: string = "";
   // fromDate?: Date;
   // toDate?: Date;
 
@@ -32,16 +25,25 @@ export class AppComponent {
 
   displayedColumns: string[] = ['jcl', 'query', 'consolidatedFileName', 'job', 'timeStamp', 'directLink'];
 
-  constructor(private tableContentService: TableContentService){}
+  constructor(private tableContentService: TableContentService,
+     private formBuilder: FormBuilder){}
+
+  queryForm: FormGroup = this.formBuilder.group({
+    jclParameter: new FormControl('', Validators.required),
+    keywordParameter: new FormControl('', Validators.required),
+    fromDate: new FormControl(),
+    toDate: new FormControl()
+  });
 
   sendQuery(){
-    this.query.jcl = this.jclParameter;
-    this.query.query = this.keywordParameter;
-    this.query.init_date = this.fromDate;
-    this.query.final_date = this.toDate;
+    this.query.jcl = this.queryForm.controls['jclParameter'].value;
+    this.query.query = this.queryForm.controls['keywordParameter'].value;
+    this.query.init_date = this.queryForm.controls['fromDate'].value;
+    this.query.final_date = this.queryForm.controls['toDate'].value;
 
+    console.log(this.query);
 
-    if(this.checkStringInput(this.query.jcl) || this.checkStringInput(this.query.query)){
+    if(this.notValidString(this.query.jcl) || this.notValidString(this.query.query)){
       alert("Por favor, preencha os campos obrigatórios!");
     }else{
       this.showSpinner = true;      
@@ -70,16 +72,20 @@ export class AppComponent {
     window.open(url, "_blank");
   }
 
-  checkStringInput(text: string): boolean{
-    return (text.length == 0 || !text.trim())
+  notValidString(text: string): boolean{
+    return (text.length == 0 || text.trim().length == 0)
     ? true
     : false;
   }
 
-  checkMinimumFields(){
-    return (this.checkStringInput(this.jclParameter) && this.checkStringInput(this.keywordParameter))
-    ? true 
+  minimumFieldsRequired(){
+    return (this.notValidString(this.queryForm.controls['jclParameter'].value) && this.notValidString(this.queryForm.controls['keywordParameter'].value))
+    ? true
     :false;
+  }
+
+  hasError(controlName: string, errorName: string){
+    return this.queryForm.controls[controlName].hasError(errorName);
   }
 
 }

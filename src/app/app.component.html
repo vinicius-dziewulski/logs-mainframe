@@ -8,34 +8,37 @@
 <mat-card>
     <h1>Filtros</h1>
 
-    <mat-form-field class="query-field" appearance="fill">
-        <mat-label>JCL</mat-label>
-        <input matInput [(ngModel)]="jclParameter" placeholder="Ex. PA04R01" required>
-        <mat-error *ngIf="checkStringInput(jclParameter)">JCL precisa ser preenchido</mat-error>
-    </mat-form-field>
+    <form [formGroup]="queryForm">
+        <mat-form-field class="query-field" appearance="fill">
+            <mat-label>JCL</mat-label>
+            <input matInput formControlName="jclParameter" placeholder="Ex. PA04R01" required>
+            <mat-error *ngIf="hasError('jclParameter','required')">JCL precisa ser preenchido</mat-error>
+        </mat-form-field>
 
 
-    <mat-form-field class="query-field" appearance="fill">
-        <mat-label>Keyword</mat-label>
-        <input matInput [(ngModel)]="keywordParameter" placeholder="Ex. -803" required>
-        <mat-error *ngIf="checkStringInput(keywordParameter)">Keyword precisa ser preenchido</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="query-field" appearance="fill">
-        <mat-label>From</mat-label>
-        <input matInput [(ngModel)]="fromDate" type="date">
-    </mat-form-field>
-
-    <mat-form-field class="query-field" appearance="fill">
-        <mat-label>To</mat-label>
-        <input matInput [(ngModel)]="toDate" type="date">
-    </mat-form-field>
-
-    <button mat-flat-button color="primary" [disabled]="checkMinimumFields()" (click)="sendQuery()">Procurar</button>
+        <mat-form-field class="query-field" appearance="fill">
+            <mat-label>Keyword</mat-label>
+            <input matInput formControlName="keywordParameter" placeholder="Ex. -803" required>
+            <mat-error *ngIf="hasError('keywordParameter','required')">Keyword precisa ser preenchido</mat-error>
+        </mat-form-field>
 
 
-    <mat-spinner class="spinner" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+        <mat-form-field class="query-field" appearance="fill">
+            <mat-label>From</mat-label>
+            <input matInput formControlName="fromDate" type="date">
+        </mat-form-field>
+
+        
+        <mat-form-field class="query-field" appearance="fill">
+            <mat-label>To</mat-label>
+            <input matInput formControlName="toDate" type="date">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" [disabled]="!queryForm.valid" (click)="sendQuery()">Procurar</button>
+        </form>
 </mat-card>
+
+<mat-spinner class="spinner" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
 
 <!-- <mat-divider></mat-divider> -->
 
