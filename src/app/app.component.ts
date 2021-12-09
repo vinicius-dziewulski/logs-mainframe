@@ -12,10 +12,6 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 })
 
 export class AppComponent {
-  // jclParameter: string = "";
-  // keywordParameter: string = "";
-  // fromDate?: Date;
-  // toDate?: Date;
 
   showProgressBar: boolean = false;
 
@@ -33,7 +29,7 @@ export class AppComponent {
     keywordParameter: new FormControl('', Validators.required),
     fromDate: new FormControl(),
     toDate: new FormControl()
-  });
+  }, {validators: this.validateDate});
 
   sendQuery() {
     this.dataSource = [];
@@ -73,4 +69,25 @@ export class AppComponent {
     return this.queryForm.controls[controlName].hasError(errorName);
   }
 
+  hasErrorFormGroup(errorName: string) {
+    return this.queryForm.hasError(errorName);
+  }
+
+  validateDate(group: FormGroup){
+    const fromStringType:string = group.controls['fromDate'].value;
+    const toStringType:string = group.controls['toDate'].value;
+    const fromDateType = new Date(fromStringType);
+    const toDateType = new Date(toStringType);
+    console.log("from: ", fromStringType);
+    console.log("to: ", toStringType);
+    // console.log(toStringType == null && fromStringType != null);
+    if((fromDateType > toDateType) ||
+    fromStringType == null && toStringType != null ||
+    toStringType == null && fromStringType != null||
+    fromStringType == "" && toStringType != ""||
+    toStringType == "" && fromStringType != ""){
+      return { notValid: true };
+    }
+    return null;
+  }
 }

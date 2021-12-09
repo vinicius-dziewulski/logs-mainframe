@@ -26,13 +26,26 @@
         <mat-form-field class="query-field" appearance="fill">
             <mat-label>From</mat-label>
             <input matInput formControlName="fromDate" type="date">
+            <div style = "color:red" *ngIf="hasErrorFormGroup('notValid')">
+                Não válido
+            </div>
+            <!-- <mat-error *ngIf="hasError('fromDate','fromDateEmpty')">From não pode estar vazio se o campo To for preenchido</mat-error> -->
         </mat-form-field>
 
         
         <mat-form-field class="query-field" appearance="fill">
             <mat-label>To</mat-label>
             <input matInput formControlName="toDate" type="date">
+            <div class="dateErrors">
+                <div style = "color:red" *ngIf="hasErrorFormGroup('notValid')">
+                    Não válido
+                </div>
+            </div>
+            
+            <!-- <mat-error *ngIf="hasError('toDate','toDateEmpty')">To não pode estar vazio se o campo From for preenchido</mat-error> -->
         </mat-form-field>
+
+        <!-- <span *ngIf="hasErrorFormGroup('notValid')"></span> -->
 
         <button mat-flat-button color="primary" [disabled]="!queryForm.valid" (click)="sendQuery()">Procurar</button>
         </form>
