@@ -26,10 +26,6 @@
         <mat-form-field class="query-field" appearance="fill">
             <mat-label>From</mat-label>
             <input matInput formControlName="fromDate" type="date">
-            <div style = "color:red" *ngIf="hasErrorFormGroup('notValid')">
-                Não válido
-            </div>
-            <!-- <mat-error *ngIf="hasError('fromDate','fromDateEmpty')">From não pode estar vazio se o campo To for preenchido</mat-error> -->
         </mat-form-field>
 
         
@@ -41,17 +37,12 @@
                     Não válido
                 </div>
             </div>
-            
-            <!-- <mat-error *ngIf="hasError('toDate','toDateEmpty')">To não pode estar vazio se o campo From for preenchido</mat-error> -->
-        </mat-form-field>
 
-        <!-- <span *ngIf="hasErrorFormGroup('notValid')"></span> -->
+        </mat-form-field>
 
         <button mat-flat-button color="primary" [disabled]="!queryForm.valid" (click)="sendQuery()">Procurar</button>
         </form>
 </mat-card>
-
-<!-- <mat-divider></mat-divider> -->
 
 <mat-card *ngIf="dataSource">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -90,7 +81,14 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
     <div class="progressBar">
         <mat-progress-bar [style.display]="showProgressBar ? 'block' : 'none'" mode="indeterminate"></mat-progress-bar>   
     </div>
-    </mat-card>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons 
+        aria-label="Select page of logs">
+    </mat-paginator>
+
+</mat-card>

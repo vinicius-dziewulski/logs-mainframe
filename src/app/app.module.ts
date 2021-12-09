@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 
@@ -23,7 +23,4 @@ import { MaterialModule } from './material.module';
   bootstrap: [AppComponent]
 })
 
-export class AppModule { 
-  inputFormControl = new FormControl('', [Validators.required]);
-
-}
+export class AppModule {}
