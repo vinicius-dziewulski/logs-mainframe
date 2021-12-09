@@ -38,8 +38,6 @@
         </form>
 </mat-card>
 
-<mat-spinner class="spinner" [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-
 <!-- <mat-divider></mat-divider> -->
 
 <mat-card *ngIf="dataSource">
@@ -79,4 +77,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</mat-card>
+    <div class="progressBar">
+        <mat-progress-bar [style.display]="showProgressBar ? 'block' : 'none'" mode="indeterminate"></mat-progress-bar>   
+    </div>
+    </mat-card>

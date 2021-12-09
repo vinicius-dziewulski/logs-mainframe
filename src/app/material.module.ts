@@ -4,13 +4,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-
-
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [MatButtonModule, 
@@ -18,20 +13,16 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatTableModule,
     MatCardModule,
-    MatProgressSpinnerModule,
     MatDividerModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    MatProgressBarModule
     ],
   exports: [MatButtonModule, 
     MatToolbarModule,
     MatInputModule,
     MatTableModule,
     MatCardModule,
-    MatProgressSpinnerModule,
     MatDividerModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    MatProgressBarModule
     ],
 })
 export class MaterialModule { }
