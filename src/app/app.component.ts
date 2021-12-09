@@ -78,9 +78,7 @@ export class AppComponent {
     const toStringType:string = group.controls['toDate'].value;
     const fromDateType = new Date(fromStringType);
     const toDateType = new Date(toStringType);
-    console.log("from: ", fromStringType);
-    console.log("to: ", toStringType);
-    // console.log(toStringType == null && fromStringType != null);
+
     if((fromDateType > toDateType) ||
     fromStringType == null && toStringType != null ||
     toStringType == null && fromStringType != null||
@@ -88,6 +86,7 @@ export class AppComponent {
     toStringType == "" && fromStringType != ""){
       return { notValid: true };
     }
+    
     return null;
   }
 }

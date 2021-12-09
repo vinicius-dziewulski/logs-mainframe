@@ -32,18 +32,12 @@ export class TableContentService {
   }
 
   buildQuery(query: QueryModel): any{
-    console.log(query.init_date);
     if(query.init_date == null || query.init_date.toString().length == 0){
-      console.log({
-        query: query.query, 
-        jcl: query.jcl
-      });
       return {
         query: query.query, 
         jcl: query.jcl
       };
     }
-    console.log(query);
     return query;
   }
 }
