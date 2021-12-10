@@ -6,6 +6,7 @@ import { resultToTableOfContentModel } from './interfaces/ITableContent';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { validateDate } from './custom-date.validation';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,7 @@ export class AppComponent {
     keywordParameter: new FormControl('', Validators.required),
     fromDate: new FormControl(),
     toDate: new FormControl()
-  }, {validators: this.validateDate});
+  }, {validators: validateDate});
 
   sendQuery() {
     this.dataSource.data = [];
@@ -79,22 +80,5 @@ export class AppComponent {
 
   hasErrorFormGroup(errorName: string) {
     return this.queryForm.hasError(errorName);
-  }
-
-  validateDate(group: FormGroup){
-    const fromStringType:string = group.controls['fromDate'].value;
-    const toStringType:string = group.controls['toDate'].value;
-    const fromDateType = new Date(fromStringType);
-    const toDateType = new Date(toStringType);
-
-    if((fromDateType > toDateType) ||
-    fromStringType == null && toStringType != null ||
-    toStringType == null && fromStringType != null||
-    fromStringType == "" && toStringType != ""||
-    toStringType == "" && fromStringType != ""){
-      return { notValid: true };
-    }
-
-    return null;
   }
 }
