@@ -22,6 +22,7 @@ export class AppComponent {
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+  title: string = 'logs-mainframe';
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
