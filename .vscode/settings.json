@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a405ebd6-a9c2-4714-bece-a4d1ec05eba5/resourceGroups/ebm-cta--dev-rg/providers/Microsoft.Web/sites/logs-mainframe",
+    "appService.deploySubpath": "dist\\logs-mainframe"
+}
