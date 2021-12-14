@@ -18,7 +18,7 @@ export class TableContentService {
     const headers = {
       'Content-Type': 'application/json',
       'Ocp-Apim-Subscription-Key': '87b917430d294c88a67008de74aa8e70',
-      'Origin': 'https://ebm-cta-test-datasquad-apim.developer.azure-api.net',
+      // 'Origin': 'https://ebm-cta-test-datasquad-apim.developer.azure-api.net',
       'Cache-Control': 'no-cache'
     }
 
